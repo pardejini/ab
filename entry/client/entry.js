@@ -1,5 +1,5 @@
 // Methods for optimistic updates
-import 'app/methods';
+import 'app/server/methods';
 
 import './routes';
 

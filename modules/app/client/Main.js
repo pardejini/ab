@@ -1,6 +1,4 @@
 import { Component } from 'react';
-import _ from 'lodash'
-
 export default class Main extends Component {
   constructor(){
     super()
@@ -15,21 +13,20 @@ export default class Main extends Component {
     e.preventDefault();
     var id = this.refs.id.value.trim();
 
-    Meteor.call('getItem', {}, function(err, results) {
+    Meteor.call('getItem', function(err, results) {
       var res = null;
       var _results = [];
 
       if (!err) {
-        res = JSON.parse(results.content).result.items;
+        res = JSON.parse(results.content).rgInventory;
         console.log(res)
-        _results = _.map(res, function (item, i) {
+        _results = _.map(res, function (item) {
           return {
             _id: item.id,
-            _original_id: item.original_id,
-            _float: (item.hasOwnProperty('attributes')) ?  ((item.attributes).hasOwnProperty('2') ? item.attributes['2'].float_value : "nao tem") : "null"
           };
         });
-        this.setState('data', _results);
+        console.log(_results)
+        this.setState({data: _results});
       } else {
         console.log(err);
       }
