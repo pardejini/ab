@@ -1,8 +1,6 @@
 import { Component } from 'react';
 import _ from 'lodash'
 
-
-
 export default class Main extends Component {
   constructor(){
     super()
@@ -17,9 +15,7 @@ export default class Main extends Component {
     e.preventDefault();
     var id = this.refs.id.value.trim();
 
-    var apiURL = `http://api.steampowered.com/IEconItems_730/GetPlayerItems/v0001/?key=C176F11B907482AFFD4F01780187B9BD&SteamID=${id}`;
-
-    HTTP.get(apiURL, {}, function(err, results) {
+    Meteor.call('getItem', {}, function(err, results) {
       var res = null;
       var _results = [];
 
