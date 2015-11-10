@@ -1,3 +1,4 @@
+'use strict'
 import { Component } from 'react';
 export default class Main extends Component {
   constructor(){
@@ -9,9 +10,10 @@ export default class Main extends Component {
   }
 
   clicked(e) {
-
+    var self = this;
     e.preventDefault();
     var id = this.refs.id.value.trim();
+    console.log(id)
 
     Meteor.call('getItem', function(err, results) {
       var res = null;
@@ -26,7 +28,7 @@ export default class Main extends Component {
           };
         });
         console.log(_results)
-        this.setState({data: _results});
+        self.setState({data: _results});
       } else {
         console.log(err);
       }
@@ -35,9 +37,6 @@ export default class Main extends Component {
   }
 
   render() {
-    let createItem = function(item) {
-      return <li key={item.id}>{item.id}</li>;
-    };
     return (
         <div className="container">
           <form className="commentForm" onSubmit={this.clicked}>
@@ -46,7 +45,9 @@ export default class Main extends Component {
           </form>
           <div>
             <ul>
-              <ul>{this.state.data.map(createItem)}</ul>
+              {this.state.data.map(function(item) {
+                return <li key={item.id}>{item.id}</li>;
+              })}
             </ul>
           </div>
         </div>
